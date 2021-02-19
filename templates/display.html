@@ -37,7 +37,7 @@
                             <td>{{ data["amount"] }}</td>
                             <td>{{ data["reason"] }}</td>
                             <td>{{ data["task"] }}</td>
-                            <td><a class="btn btn-success" href="{{ url_for('update', uid=data.id) }}">Update</a></td>
+                            <td><a class="btn btn-success" href="{{ url_for('update', amb=data.amb,queue=data.queue ) }}">Update</a></td>
                         </tr>
                     {% endfor %}
                     </tbody>

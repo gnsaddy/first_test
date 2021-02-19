@@ -12,7 +12,7 @@
                     </div>
                     <div class="card-body">
                         {% for data in data %}
-                            <form method="post" action="/display/update/{{ data["id"] }}">
+                            <form method="post" action="/display/update/{{ data["amb"] }}/{{ data["queue"] }}">
                                 <div class="form-group">
                                     <label for="amb">Amb ID:</label>
                                     <input class="form-control" type="text" name="amb" id="amb" placeholder="Amb ID"

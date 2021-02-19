@@ -12,17 +12,20 @@ def index():
         try:
             amb = request.form["amb"]
             queue = request.form["queue"]
-            amount = request.form["amount"]
+            task = request.form["task"]
 
             state = request.form["state"]
             reason = request.form["reason"]
-            print(amount)
             with sqlite3.connect("testFirst.db") as con:
-
-                if int(amount) > int(0):
-                    task = 1.0
-                elif int(amount) == int(0):
-                    task = 0.5
+                amount = 0
+                if float(task) == 0.5:
+                    amount = 50
+                elif float(task) == 1.0:
+                    amount = 100
+                elif float(task) == 1.5:
+                    amount = 150
+                elif float(task) == 2.0:
+                    amount = 200
                 cur = con.cursor()
                 cur.execute("INSERT into test (amb, queue, amount,"
                             "task, state, reason) values (?,?,?,?,?,?)",
@@ -89,12 +92,12 @@ def delete():
         return render_template('delete.html')
 
 
-@app.route("/display/update/<int:uid>", methods=["GET", "POST"])
-def update(uid):
+@app.route("/display/update/<int:amb>/<int:queue>", methods=["GET", "POST"])
+def update(amb, queue):
     con = sqlite3.connect("testFirst.db")
     con.row_factory = sqlite3.Row
     cur = con.cursor()
-    cur.execute("SELECT * from test where id = ?", (uid,))
+    cur.execute("SELECT * from test where amb = ? and queue = ? ", (amb, queue))
     get_rows = cur.fetchall()
 
     if request.method == "POST":
@@ -109,8 +112,8 @@ def update(uid):
 
             with sqlite3.connect("testFirst.db") as con:
                 cur = con.cursor()
-                cur.execute("update test set amb=?, queue=?,amount=?,task=?,state=?,reason=? where id=?",
-                            (amb, queue, amount, task, state, reason, uid))
+                cur.execute("update test set amb=?, queue=?,amount=?,task=?,state=?,reason=? where amb = ? and queue = ?",
+                            (amb, queue, amount, task, state, reason, amb, queue))
 
                 con.commit()
                 flash("Data updated successfully!!")
