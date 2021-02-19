@@ -1,0 +1,63 @@
+{% extends "include/base.html" %}
+
+{% block title %} <title>Index</title> {% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row mx-auto">
+            <div class="col-md-10 mx-auto">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="text-dark card-text">Update Queue Amount</h3>
+                    </div>
+                    <div class="card-body">
+                        {% for data in data %}
+                            <form method="post" action="/display/update/{{ data["id"] }}">
+                                <div class="form-group">
+                                    <label for="amb">Amb ID:</label>
+                                    <input class="form-control" type="text" name="amb" id="amb" placeholder="Amb ID"
+                                           value='{{ data["amb"] }}'>
+                                </div>
+                                <div class="form-group">
+                                    <label for="queue">Queue ID: </label>
+                                    <input class="form-control" type="text" name="queue" id="queue"
+                                           placeholder="Queue ID"
+                                           value="{{ data["queue"] }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="amount">Amount: </label>
+                                    <input class="form-control" type="text" name="amount" id="amount"
+                                           placeholder="Amount"
+                                           value="{{ data["amount"] }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="task">Task Count: </label>
+                                    <input class="form-control" type="text" name="task" id="task"
+                                           placeholder="Task Count"
+                                           value="{{ data["task"] }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="state">State: </label>
+                                    <input class="form-control" type="text" name="state" id="state" placeholder="State"
+                                           value="{{ data["state"] }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="reason">Reason: </label>
+                                    <input class="form-control" type="text" name="reason" id="reason"
+                                           placeholder="Reason"
+                                           value="{{ data["reason"] }}">
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary" name="submit">Submit</button>
+                                </div>
+                            </form>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </div>
+
+{% endblock %}

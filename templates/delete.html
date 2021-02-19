@@ -1,0 +1,39 @@
+{% extends 'include/base.html' %}
+
+{% block title %} <title>Delete Report</title> {% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-10">
+                <div class="card">
+                    <div class="card-body">
+                        {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <h4 class="text-danger font-weight-bolder">{{ message }}</h4>
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+                        <form action="/delete" method="post">
+                            <div class="form-group">
+                                <label for="aid">Amb ID: </label>
+                                <input class="form-control" type="text" name="aid" id="aid" placeholder="Amb ID">
+                            </div>
+                            <div class="form-group">
+                                <label for="queue">Queue ID: </label>
+                                <input class="form-control" type="text" name="queue" id="queue" placeholder="Queue ID"
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary" name="submit">Delete</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
