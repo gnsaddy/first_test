@@ -2,7 +2,7 @@
 echo "Exporting the flask app"
 export FLASK_APP=app.py
 
-echo "Running the app on development enviroment"
+echo "Running the app on development environment"
 
 export FLASK_ENV=development
 

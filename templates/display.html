@@ -6,7 +6,7 @@
 
     <div class="container mt-5">
         <div class="row">
-            <div class="col-md-10 mx-auto shadow">
+            <div class="col-md-12">
                 {% with messages = get_flashed_messages() %}
                     {% if messages %}
                         {% for message in messages %}
@@ -14,7 +14,7 @@
                         {% endfor %}
                     {% endif %}
                 {% endwith %}
-                <table class="table table-bordered table-active mt-3">
+                <table id="data" class="m-3 p-3" style="width:100%">
                     <thead class="bg-dark">
                     <tr class="text-white">
                         <th>Date</th>
@@ -37,7 +37,8 @@
                             <td>{{ data["amount"] }}</td>
                             <td>{{ data["reason"] }}</td>
                             <td>{{ data["task"] }}</td>
-                            <td><a class="btn btn-success" href="{{ url_for('update', amb=data.amb,queue=data.queue ) }}">Update</a></td>
+                            <td><a class="btn btn-success"
+                                   href="{{ url_for('update', amb=data.amb,queue=data.queue ) }}">Update</a></td>
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -45,5 +46,11 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#data').DataTable();
+        });
+    </script>
 
 {% endblock %}
