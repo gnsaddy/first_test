@@ -1,5 +1,6 @@
-from flask import Flask, render_template, json, request, redirect, url_for, flash
 import sqlite3
+
+from flask import Flask, render_template, request, redirect, url_for, flash
 
 app = Flask(__name__)
 app.secret_key = "qwertyuiop"
@@ -66,25 +67,25 @@ def delete():
             try:
                 cur = con.cursor()
                 if aid:
-                    cur.execute("select amb from test where amb=?", (aid,))
+                    cur.execute("select amb from test where amb=? and queue=?", (aid, queue))
                     get_rows = cur.fetchall()
                     if get_rows:
-                        cur.execute("delete from test where amb = ?", (aid,))
+                        cur.execute("delete from test where amb = ? and queue=?", (aid, queue))
                         flash("deleted!!")
                         return redirect(url_for('display'))
                     else:
-                        flash("Amb id does not matched!!")
+                        flash("Id does not matched!!")
                         return redirect(url_for('delete'))
-                elif queue:
-                    cur.execute("select queue from test where queue=?", (queue,))
-                    get_rows = cur.fetchall()
-                    if get_rows:
-                        cur.execute("delete from test where queue = ?", (queue,))
-                        flash("deleted!!")
-                        return redirect(url_for('display'))
-                    else:
-                        flash("Queue id does not matched!!")
-                        return redirect(url_for('delete'))
+                # elif queue:
+                #     cur.execute("select queue from test where queue=?", (queue,))
+                #     get_rows = cur.fetchall()
+                #     if get_rows:
+                #         cur.execute("delete from test where queue = ?", (queue,))
+                #         flash("deleted!!")
+                #         return redirect(url_for('display'))
+                #     else:
+                #         flash("Queue id does not matched!!")
+                #         return redirect(url_for('delete'))
                 return redirect(url_for('display'))
             except TypeError:
                 flash("Can not delete!!")
@@ -112,8 +113,9 @@ def update(amb, queue):
 
             with sqlite3.connect("testFirst.db") as con:
                 cur = con.cursor()
-                cur.execute("update test set amb=?, queue=?,amount=?,task=?,state=?,reason=? where amb = ? and queue = ?",
-                            (amb, queue, amount, task, state, reason, amb, queue))
+                cur.execute(
+                    "update test set amb=?, queue=?,amount=?,task=?,state=?,reason=? where amb = ? and queue = ?",
+                    (amb, queue, amount, task, state, reason, amb, queue))
 
                 con.commit()
                 flash("Data updated successfully!!")
